@@ -40,3 +40,140 @@ router/index.js
 
 genrar un nuevo objeto definiendo el path que s la url, un nombre a la ruta y ahora tenemos que importar nuestra ruta para ello hay dos formas.
 
+
+La primera forma seria primero importar primero:
+
+import Blog from '../views/Blog.vue'
+
+
+
+despues definimos el contenido en la vista para ello.
+
+{
+      path: '/blog',
+      name: 'blog',
+      component: Blog,      
+    },
+
+
+
+al visualizarlo en el navegador nos marca un error:
+[plugin:vite:vue] At least one <template> or <script> is required in a single file component. /home/klvst3r/dev/js/router/src/views/Blog.vue /home/klvst3r/dev/js/router/src/views/Blog.vue
+
+
+El router está bien 👍.
+El problema viene de cómo Vite/Vue está interpretando tu archivo Blog.vue.
+
+Aunque a simple vista tu componente parece correcto, ese error suele aparecer cuando Vue no detecta correctamente un <template> o un <script> válido. Las causas más comunes son estas:
+
+La solución es:
+
+Declara explícitamente el componente en el <script>:
+
+aternativa moderna
+
+<template>
+  <h1>Bienvenido al Blog</h1>
+</template>
+
+<script setup>
+</script>
+
+
+<script>
+export default {
+  name: 'Blog'
+}
+</script>
+
+
+
+La otra forma de importar las vistas sin necesidad de importar es colocar llamar al componente
+
+
+ {
+      path: '/blog',
+      name: 'blog',
+      component: () => import('../views/Blog.vue'),
+    },
+
+
+
+Esecificamos que el componente al que vamos a llamar se llama blog, todo debe funcinar exactamente igual.
+
+Con esto tenemos dos formas de llamar a nuestros componentes.
+
+Agegamos un nuevo linkesto es en el componente principal App.vue
+
+Ahora todo funciona perfecto.
+
+con esto podemos navegar po las secciones de la aplicaión.
+
+Para el temoa Inicil los estilos quedaron 
+
+@import './base.css';
+
+
+
+
+
+#app {
+
+
+  max-width: 1280px;
+
+
+  margin: 0 auto;
+
+
+  padding: 2rem;
+
+
+  font-weight: normal;
+
+
+}
+
+
+
+
+
+a,
+
+
+.green {
+
+
+  text-decoration: none;
+
+
+  color: hsla(160, 100%, 37%, 1);
+
+
+  transition: 0.4s;
+
+
+  padding: 3px;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
