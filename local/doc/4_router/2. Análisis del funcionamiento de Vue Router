@@ -1,0 +1,546 @@
+2. Análisis del funcionamiento de Vue Router 
+
+Antes de empezar a crear rutas en nuestra aplicación, es importante entender cómo funciona Vue Router. En esta sección, analizaremos el funcionamiento de Vue Router y entenderemos su estructura y configuración.
+
+
+Se veran las las deferencias de instalar vue router e instalar sin vue router.
+
+
+Lo que se quiere es lo siguiente:
+En la carpeta src veremso la estructura
+
+.
+├── App.vue
+├── assets
+│   ├── base.css
+│   ├── logo.svg
+│   └── main.css
+├── components
+│   ├── HelloWorld.vue
+│   ├── icons
+│   │   ├── IconCommunity.vue
+│   │   ├── IconDocumentation.vue
+│   │   ├── IconEcosystem.vue
+│   │   ├── IconSupport.vue
+│   │   └── IconTooling.vue
+│   ├── TheWelcome.vue
+│   └── WelcomeItem.vue
+├── main.js
+├── router
+│   └── index.js
+└── views
+    ├── AboutView.vue
+    └── HomeView.vue
+
+
+Tenemos la carpeta llamada router y una carpeta llamada views
+
+La carpeta llamada router, con un archivo js llamado index.js
+
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: HomeView,
+    },
+    {
+      path: '/about',
+      name: 'about',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AboutView.vue'),
+    },
+  ],
+})
+
+export default router
+
+
+
+
+En este archivo se han hecho algunas importanciones cos dos funciones createRouter y la otra createWebHistory , adicionamente se a agregado un componente HomeView
+
+es que no se encuentra en la carpeta componentes, que es donde estabamos creando nuestros componentes, si no que se encentra llamada views, pero si analizamos el componente que es un componente tradicional.
+
+
+<script setup>
+import TheWelcome from '../components/TheWelcome.vue'
+</script>
+
+<template>
+  <main>
+    <TheWelcome />
+  </main>
+</template>
+
+
+
+Simpleente lo estan ubicando en otra carpeta, por que estos componentes van a funcionar como vistas es decir va a mostrar el contenido completo de una ´página
+Asi dentro de cada vista podremos tener componentes mas pequeños.
+
+por ejemplos los article, los asides.
+
+
+Para diferenciarlos de un componente de vista completo utilizan vue el HomeView
+
+Podemos ver tambien que se define una constante llamada router:
+
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: HomeView,
+    },
+    {
+      path: '/about',
+      name: 'about',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AboutView.vue'),
+    },
+  ],
+})
+
+
+A esta constante llamada, se le esta asignando justamente el metodo que se habia definido anteriormente crateRouter, a este le pasabamos un objetos y le pasamos dos cosas. que modelo de history queremos trabajar, sobre esto se va a trabajar:
+
+  history: createWebHistory(import.meta.env.BASE_URL),
+
+y definen un campo llamado routes con diferentes endpoints.
+
+Desde rouytes van a controlar que es lo que queremos que se muestre cada vez que ingresemos a una determinada url, dentro del route vamos a definir varios objetos, cada uno de estos objetos va a hacer referecia a una determinada ruta, en esos objetos definimos tres campos
+
+- path
+- name
+- component
+
+Por el momento nos sentraremos en el path y en el component.
+
+El path es hacer referencia al path de la ruta al cual y estoy intentando ingresar.
+
+/ sera raiz  o home, por que no he escrito nada delante 
+
+Cuando ingresamos a la seccion de cursos, estamos haciendo referencia al path de
+
+/cursos
+
+por que es lo que acompaña al dominio principal, asi con post
+
+promociones, 
+
+entonces de manera similar organizamos nuestras vistas en vue
+
+establecemos los puntos escenciales en uestra aplicación , tenemos dos ejemplos
+
+/
+
+/about
+
+
+entonces si nos dirigimos
+
+al dominio raiz se mostrara el contenido de home, pero si ingresamos a about, tenemos otro contenido, tenemos un juego entre el campo 
+
+component:HomeView
+
+que es el que tenemos abajo:
+
+Que dice component:
+
+ component: () => import('../views/AboutView.vue'),
+
+ Dentro del componente mencionamos cual es el componente que queremos que se muestre cada vez que se muestre cada vez que ingresemos a una determinada ruta.
+
+ por ejemplo, especificamos que cuando cargue raiz o home cargue el componente HomeView
+
+ mentras que en about, que cuando ingresamos a la ruta /abaoaut, se cargue un comonente llamado AboutView
+
+ ambos componentes estan en la carpeta views, por ello se muestran.
+
+
+ Si nos centramos en el archivo index.js
+
+
+ Veremos que a la hora de definir las rutas, al componente se le esta haciendo referencia de dos maneras distintas.
+
+ en la primera ruta se importa la definicion del componente, llamado hoeView, y despues solo se hace referencia a este.
+
+ Miestras que en la segunda ruta, lo que se ha hecho es colocar component pero se esta cargando el componente.
+
+
+ Cual es la diferencia.
+
+ La iferencia es que cuando nosotros importamos un componente y luego lo vamos llamando en las rutas, lo que hace vue a la hora de utilizar nuestra aplicación es importar todos los componentes que se definene al inicio, lo utilizamos o no lo utilicemos. Puede que no hagamos click sobre ninguno de los enlaces, solo en algunas secciones,
+
+ De igual manera se an cargado las vistas 
+
+
+ En el sitio se tienen 20 rutas y 20 componentes que no se van a utilizar, lo que hara que la aplicación a la larga se haga lenta.
+
+
+ Pensanso en esto, vue proporciona otra forma de cargar las vistas, que es de forma perezosa, esa es la forma justamente qu s esta cargando .
+
+ Le indicamos que queremos crear una ruta, una ruta con path /about, no obstante no queremos que nos cargue el componente al inicializarce la aplicación, sino que queremos que se cargue hasta que yo haga click sobre el enlace de la url, es decir hasta que ingresemos a la ruta /about
+
+ Por que le pedimos que sea de esta manera.
+
+ La vsta no se carga, hasta que no hagamos click en a ruta, que se produce la importanción y ase asigna ese coponente a esa ruta, a segunda vez sera mas rapida, ese es la principal difeencia.
+
+ Hasta el momento hemos visto como definir nuestras rutas, una es importando y otra es cargarla de manera perezosa, es decir hasta hacer click sobre el url.
+
+
+ En la segunda se asigna el archivo de rutas a mi aplicación, lo  que haremso es dirigirnos al archivo main.js
+
+ y tenemos:
+
+
+ import './assets/main.css'
+
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+
+const app = createApp(App)
+
+app.use(router)
+
+app.mount('#app')
+
+
+
+
+De igual forma estamos creando uina aplicación:
+
+  const app = createApp(App)
+
+Para eso debimos haber definido a la definición de app y en pa parde de abajode igual manera estamos montando la aplicación.
+
+La estamos monstando sobre un elemento con id app, hasta el momento funciona como si hibieramos creado la primera vez nuestra aplicación , pero aparte de esto. Lo que esta ocurriendo es o siguiente:
+
+en index.js hemos definido la constante router se esta exportando 
+
+export default router
+
+Estamos diciendo que es un contenido para exportación.
+
+Y desde el archivo main.js se esta importando:
+
+import router from './router'
+
+
+Luego de importarlo, lo que estmos diciendo es que queremos utilizarlo dentro de nuestra aplicación:
+
+app.use(router)
+
+
+Con esto hacemos funcional el sistema de rutas.
+
+Auyn hay algo mas que analizar, nosotrosndistintamente la ppagina indistintamente a la que ingresemos desde el navegador:
+
+
+http://localhost:5173/about
+
+
+Siempre se va a cargar este componente:
+
+App.vue
+
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
+</script>
+
+<template>
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
+</template>
+
+<style scoped>
+header {
+  line-height: 1.5;
+  max-height: 100vh;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 2rem;
+}
+
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
+
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
+  }
+
+  .logo {
+    margin: 0 2rem 0 0;
+  }
+
+  header .wrapper {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  nav {
+    text-align: left;
+    margin-left: -1rem;
+    font-size: 1rem;
+
+    padding: 1rem 0;
+    margin-top: 1rem;
+  }
+}
+</style>
+
+
+
+De la misma nmanera que como ocurria antes. por que viene a ser el componente principal 
+
+Analizando este componente.
+
+tenemos el script inicialmente, tenemos el template, aca nos centraremos en o siguiente.
+
+Aca se ha agregado cierto componentes, por ejemplo:
+
+se han agregado una etiqueta nav, y dentro se han agregado se ha agregado el componente RouterLink y por debajo del header se ha llamado al componente 
+
+RouterView, ahora el header viene a ser la parte d ela izquierda del contenido y la parte de RouterView viene a ser la parte lateral deecha del contenido.
+
+Nosotros hemos definido. que se muestre un determinado coponente, cada vez que ingresemos a una ruta, en este caso s el componente home en este caso es home view y about view estos dos componetes que tenemos definidos en el index.js se van a renderiza juztamente en el componente 
++
+Routerview
+
+Dependiendo la ruta a la cual estemos ingresando, se llama a un determinado componente y el contenido de este componente. Se coloa justamente en odnde se encuenra el coinenten
+
+RouterView
+
+Es por ello que cuando nosotros inresamos y cabamso entre paginas Home y About, lo unico que se cambiaba era la parte de la derecha.
+
+Este es la forma en la cual nosotros lo hemos definido en el componente App,vue 
+
+El header siempre se va a cargar y el contenido variable sera
+
+RouterView
+
+Va a cambiar por los componentes que se hayan definido en las rutas.,
+
+
+
+Ahora en App.vue ademas de ello podremos ver una etiqueta nav es que el manu denavegación 
+
+
+  <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+
+Han colocado dos componentes RouterLink que funcionan como enlaces, que queremos que redirijan hacia
+
+/ home  (Esta es la ruta principal)
+
+/about About (Pedimoa redirección hacia la ruta about)
+
+
+Estos componentes se utilizan y por que no enlaces, lo que ocurre es que al utilizar RouterLink lo que permite es se renderice el contenido sin refrescar la pagina del navegador, si hacems click en home, el navegador pero se muestra otro contenido y lo mismo si cambiamos de pagina, 
+
+Si utilizacemos enlaces, el comportamiento por defecto de un enlace es redireccionar, es decir cargar la pagina, pero como estamos construyendo una spa no vamos a querer recargar la pagina, entonces por eso, los enlaces se manejan de esta manera.
+
+
+Vamos a simplificar un poco esta apariencia inicil a que se tiene.
+
+Entones en 
+
+amin.js
+
+Se esta cargando el 
+
+import './assets/main.css'
+
+El cotenido se encuentra dentro de assets main.css
+
+@import './base.css';
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }
+}
+
+
+
+Vamos a limpiar el contenido, para eliminar los estilos, sin eliminar el archivo css. principal aca instalaremos tailwindcss mas adelante 
+
+Segundo:
+
+
+en App.vue
+
+vamos a limpiar visulizando que para poder utilizar el componente RouterLink y RouteView primero tuvo que haberse importado.
+
+como lo vamos a seguir utilizando vamos a mantener la importacion simpleente indicando que haya un header
+
+que lo unico que tenda es el menu de navegación por tanto quedara asi:
+
+  <header>
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+  </header>
+
+
+Debajo estara el routerview 
+
+<RouterView />
+
+
+Ahora en index.js
+
+omo los componentes se estan comportando como vistas
+
+AboutView y HomeView, limpiamos los estilos 
+
+
+  <template>
+  <div class="about">
+    <h1>This is an about page</h1>
+  </div>
+</template>
+
+<style>
+@media (min-width: 1024px) {
+  .about {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+}
+</style>
+
+
+Limpiamos quedando:
+
+<template>
+  <div class="about">
+    <h1>This is an about page</h1>
+  </div>
+</template>
+
+<style>
+
+</style>
+
+
+
+en 
+
+<script setup>
+import TheWelcome from '../components/TheWelcome.vue'
+</script>
+
+<template>
+  <main>
+    <TheWelcome />
+  </main>
+</template>
+
+
+Quedando:
+
+<template>
+  <main>
+    <TheWelcome />
+  </main>
+</template>
+
+
+
+<template>
+<p>
+  <h1>Welcome to the Home Page</h1>
+</p>
+</template>
+
+
+
+y en About
+
+
+Con esto tenemos preparado nuestra preparación del proyecto 

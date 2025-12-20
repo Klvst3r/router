@@ -1,0 +1,137 @@
+1.  Crear proyecto con Vue Router 
+
+Vue Router es una librería que permite crear rutas en una aplicación de Vue 3. Vamos a instalar Vue Router y cómo configurar rutas en tu aplicación.
+
+Vamos a crear un nuevo proyecto de vue
+
+	$ npm create vue@latest
+
+Preguntara el nombre del proyecto 
+
+	router
+
+Ahora debemos escoger dentro de los valores mostrados, vamos a seleccionar Router (SPA development)		
+
+npm create vue@latest
+Need to install the following packages:
+create-vue@3.18.3
+Ok to proceed? (y) y
+
+
+> npx
+> create-vue
+
+┌  Vue.js - The Progressive JavaScript Framework
+│
+◇  Project name (target directory):
+│  router
+│
+◇  Select features to include in your project: (↑/↓ to navigate, space to select, a to toggle all, enter to confirm)
+│  Router (SPA development)
+│
+◇  Select experimental features to include in your project: (↑/↓ to navigate, space to select, a to toggle all, enter to
+confirm)
+│  none
+│
+◇  Skip all example code and start with a blank Vue project?
+│  No
+
+Scaffolding project in /home/klvst3r/dev/js/router...
+│
+└  Done. Now run:
+
+   cd router
+   npm install
+   npm run dev
+
+| Optional: Initialize Git in your project directory with:
+
+   git init && git add -A && git commit -m "initial commit"
+
+
+   Ahora abrimos nuestro proyecto con e editor VS Code
+
+Instalamos nom, para instalar todas las dependencias de npm
+   	$npm install
+
+Lo siguiente para corer nuestra aplicacion es ejecutar
+	$ npm run dev
+
+Abrimos ene el navegador, comprobando que se parece mucho a un proyecto de voue sin router
+
+
+La deferencia ahora esta en que apaecen dos enlaces uno home y otro about mostrando contendio
+
+Lo qu hicimos es crear solo el proyecto, mas adelante veremos como funciona esto de vue router
+
+
+	$ npm run dev
+
+	   	  VITE v7.3.0  ready in 1180 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  Vue DevTools: Open http://localhost:5173/__devtools__/ as a separate window
+  ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
+  ➜  press h + enter to show help
+
+
+Como estamos creando un nuevo repo del propyecto de Vue por dems tomar 3 caminos
+
+
+1. Clonar el proyecto
+
+	git clone git@github.com:Klvst3r/router.git
+
+2. Crear un nuevo repositorio
+
+echo "# router" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:Klvst3r/router.git
+git push -u origin main
+
+o 
+
+3. Hacer push en un repos exstente desde la linea de comandos.
+
+git remote add origin git@github.com:Klvst3r/router.git
+git branch -M main
+git push -u origin main
+
+El README nos da algo como:
+
+router
+
+This template should help get you started developing with Vue 3 in Vite.
+Recommended IDE Setup
+
+VS Code + Vue (Official) (and disable Vetur).
+Recommended Browser Setup
+
+    Chromium-based browsers (Chrome, Edge, Brave, etc.):
+        Vue.js devtools
+        Turn on Custom Object Formatter in Chrome DevTools
+    Firefox:
+        Vue.js devtools
+        Turn on Custom Object Formatter in Firefox DevTools
+
+Customize configuration
+
+See Vite Configuration Reference.
+Project Setup
+
+npm install
+
+Compile and Hot-Reload for Development
+
+npm run dev
+
+Compile and Minify for Production
+
+npm run build
+
+router
+
