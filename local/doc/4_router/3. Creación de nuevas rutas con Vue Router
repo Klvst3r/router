@@ -1,0 +1,42 @@
+3. Creación de nuevas rutas con Vue Router 
+
+En este capítulo, aprenderemos a crear una nueva ruta en tu aplicación utilizando Vue Router. Crearemos una nueva vista que se mostrará cuando el usuario acceda a una ruta específica.
+
+
+Vamos a crear una nueva vista u nuevo componente, en la carpeta views creamos un nuevo componente con el nombre de Blog.vue
+
+
+ Utilizamos la estructura de un coponente. 
+
+
+ <template>
+
+</template>
+
+<script>
+
+</script>
+
+<style>
+    
+</style>
+
+
+
+con 
+
+<style scoped>
+
+los estilos solo afectaran a nuestro componente y minimo hay que colocar en el template 
+
+<template>
+    <h1>Bienvenido al Blog</h1>
+</template>
+
+
+Ahora vamos a generar la ruta del blog asi qu en
+
+router/index.js
+
+genrar un nuevo objeto definiendo el path que s la url, un nombre a la ruta y ahora tenemos que importar nuestra ruta para ello hay dos formas.
+
