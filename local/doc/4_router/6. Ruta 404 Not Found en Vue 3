@@ -1,0 +1,5 @@
+6. Ruta 404 Not Found en Vue 3
+
+En estsección, aprenderemos a manejar rutas no encontradas en tu aplicación utilizando Vue Router. Crearemos una ruta especial que se mostrará cuando el usuario intente acceder a una ruta que no existe.
+
+
