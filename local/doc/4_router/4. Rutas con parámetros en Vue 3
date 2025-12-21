@@ -1,0 +1,65 @@
+4. Rutas con parámetros en Vue 3 
+
+En esta sección, vamos a crear rutas con parámetros dinámicos en tu aplicación utilizando Vue Router. Crearemos una ruta que acepte un parámetro y mostrará información específica basada en el valor del parámetro.
+
+En ocaciones vamos a necesitar pasar parametros desde la url, por ejemplo si es que tenemos por ejemplo varios cursos tenemos dos urls distintas ambas inician con 
+plataorma/cursos
+
+pero despues de esta url pasamos cierta inforamción que se llama cursos-con-laravel
+
+curso-vue
+
+Que no es otra cosa que el titulo del curso, el sitio entonces fucniona a partir de este parametro que estamos pasando despues de /cursos,
+
+por eemploque en la url, los enlaces listados.
+
+
+Mostramos el detalle de cada vista, entonces, vams a necesitar parametros uno u otro contenido.
+
+Ahora enotnces vamos a crear una ruta. en el cual vamos a especificar que vamos a necesitar recibir la especificación de una url.
+
+Para ello dentro de Visual Studio Code.
+
+En index.js, creamos un objeto,  dentro de las vistas creamos un comonente llamado Post y con a estructura basica hacemos referencia a el, en el navegador hacemos referencia
+
+http://localhost:5173/blog/post
+
+Ahor alo que queremso es que si hacemos referencia al componente por ejemplo:
+
+	abc, este se pueda recuperar
+
+http://localhost:5173/blog/abc
+
+Para ello al momento de gerenarr la ruta no vamos a poner post directamente lo que hay que poner es :
+
+Lo que hacemos es indicar a vue router que i esperamos recibir una cadena pero esta cadena se va a almacenar en una variable llamada post, asi escribimos por ej. abc 
+
+No existe esa ruta llamada abc. El : post espera receibir un parametro y ese parametro quedara almacenado en una variable, vue lo entendera que haremos referencia al componnente lamado post 
+
+
+http://localhost:5173/blog/post
+
+
+Confirmamos que hace referencia a este componente llamado post, falta recuperar la información de la url desde la vist.
+
+Para ello hacemos referencia con el parametro siguiente:
+
+Hacemos referencia a una variable llamada $route.params. y vams a recuperar la información que esta guardado actualmente en una variable llamada post 
+
+$route.paams.post
+
+
+Esta información esta apareciendo en el post cmo un parametros, si pondremos algo
+
+rutas con laravel
+
+el contenido del post sera:
+
+Rutas con Laravel 
+
+
+Estamos logrando recuperar la inforamción , y ahora podremos contectaros con la api y mostrar el detalle.
+
+Lo importante es que el nombre que coloqumos como parametro :post va a ser el nombre de la variable sera el nombre de la variable donde almacenaremos la información.
+
+Debe coincider el parametros con la forma de recuperar la información 

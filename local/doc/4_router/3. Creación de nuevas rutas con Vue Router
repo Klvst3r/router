@@ -160,20 +160,13 @@ a,
 
 
 
+Con esto hemos creado un anueva ruta, en teorica tendriamos que mostrar todo el listado de nuestros blogs, pero por ejemplo svamos a la seccion de cursos.
 
+Encontramos todos los cusos sobre los cursos de la aplicación pero al dar click sobr euno de ellos, veremos el detalle. como se cual curso tengo que mostrar por que si ingresamos a otro curso veremos que tiene una estructura difeente
+La estructura es la irl 
 
+plataorma.com/cursos y  a continuación 	mosytramos el detalle del cuso es decir el nombe del surso, los mismo con cada curso. Entonces es atraves del nombre que estamos especificando en la url con ello sabremos que información debemos mostrar.
 
+Asi cuando hacems clisk en un enlace a traves de l ombre nos lleva al componente especifico.
 
-
-
-
-
-
-
-
-
-
-
-
-
-	
+Entonces lo que hacermos como crear una url que permite colocar una url con parametros y como recupearlo para mostrar el detalle para el usuario.	
