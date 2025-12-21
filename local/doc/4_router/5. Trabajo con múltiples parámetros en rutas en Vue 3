@@ -1,0 +1,84 @@
+5. Trabajo con múltiples parámetros en rutas en Vue 3
+
+Continuando con el tema de las rutas con parámetros, en est sección aprenderemos a pasar dos parámetros a una ruta y mostrar información específica basada en los valores de los parámetros.
+
+Como podriamos recuperar inforamción que pase por la url por ejemplo pasar un id de un determinado post que podemos utilizar com parametros de la consulta realizaa  a la bd
+
+Si quisieramos pasar mas de un dato, por ejemplo pasar el nombre de usuario seguido de un id 
+
+por ejemnplo
+
+plataforma/user/klvst3r/post/45
+
+estariamos pasando dos datos por la url la inforamci´n del usuarios y del id que queremos ver, veamso como recupearamos,
+
+
+en index.js
+
+Creariamos un anueva url, especificaremos la siguiente forma:
+
+{
+      path: '/user/:user/post/:post',
+      name: 'UserPost',
+      component: () => import('../views/UserPost.vue'),
+    }
+
+
+
+Recuperaremos dos parametros el nombre de usuario y el id del post 
+
+Creamos a vista
+
+UserPost.vue
+
+http://localhost:5173/user/klvst3r/post/45
+
+
+Empezarems a hablar del tema de ciclos de vida, escribimos 
+
+
+mounted() {
+        // Fetch user post data based on $route.params.user and $route.params.post
+    }
+
+Este metodo se ejecuta, cuando se haya montdo nuestro componente ennuestra vista, colocamos un cnsole .log 
+una vez montado se va a a ejeutar.
+
+
+En consola veremos que se ha montado, se ha imriseo en conosla, queremos que lo recuperado 
+
+
+$route.params
+
+Queremos que se imprima en consola. si lo colocamos 
+
+
+console.log($route.params);
+
+Hasta aca no sabe el contenido de la variable route
+
+Como queremos acceder dentro del template desde el metodo mounted, debemos indicar que se trata de una varibale denuestro componente para ello ponemos lo siguiente:
+
+console.log(this.$route.params);
+
+
+Ahora en el navegador y actualizamos 
+
+
+veremos en consola:
+
+{user: 'klvst3r', post: '45'}
+post
+: 
+"45"
+user
+: 
+"klvst3r"
+[[Prototype]]
+: 
+Object
+
+
+
+
+
