@@ -1,0 +1,41 @@
+ 9. Rutas anidadas
+
+ Uso de rutas anidadas en Vue 3
+
+En este capítulo, aprenderás a crear rutas anidadas en la aplicación utilizando Vue Router. Creamos una vista que contenga varias rutas hijas y que permita mostrar diferentes componentes basados en la ruta activa.
+
+
+va  aver ocaciones en las que en una vista porejemplo asi.
+
+Necesitemos un submeno que permita 
+
+http://localhost:5173/users/30
+User
+Aqui podrás ver el detalle de un usuario.
+
+
+Mostrara elperfil de un determinado usuario o eldetalle de los cursos a os cuales el usuario se ha matriculado, para ello vamos al archivo App.vue
+
+Copiamos la estructura siguiente:
+
+La estructuracon el div nav y lo pegamos en Users.vue
+
+
+
+
+  <div id="nav">
+    <nav>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/blog">Blog</RouterLink>
+    </nav>
+  </div>
+
+
+  cambiandoo a:
+
+  Ahora tenemos el link de cursos y perfil, la forma mas sencilla es definir una ruta de perfil con el detalle del perfil y de cursos con el detalle de cursos de un determinado usuario, perosi queremos mantener la estructura de este curso, no importa si ingreso a perdfil o cursos donde podras ver los detalles ingresaria sobre el perfil de cursos, no se necesitaria renderizar toda la pagina sino solo renderizar la parte  de abajo pero la parte de abajo es la que se renderizaria, para lograr eso, necesitamos trabajar con tutas aniadeas
+
+  Para ello en el archivo de rutas, en la ruta principal, de usuario y ahi especificmocon rutas anidades, para ello definimos una propiedad props y asignamos un array y le asignamos rutas hijas, estas rujas estan asociadas a una ruta principal de esta manera:
+
+
