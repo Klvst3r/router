@@ -1,0 +1,124 @@
+Sintaxis de coincidencia de rutas en Vue 3
+
+En esta sección, aprenderemos sobre la sintaxis de coincidencia de rutas en Vue Router y cómo utilizarla para crear rutas más complejas en nuesra aplicación.
+
+
+Vamos a hablar sobre la sintaxis de coincidencia de rutas, para locual vamos en el archivo de rutas, vamos  generar un par de nueas rutas, una para la siguiente url pegamos lo siguiente y especificamos que esperamos recibir un parametro que sera un parametro un id de un deterinada compra, ese parametro se recuperara en la url ordeID, y vamos acrear esa vista de mostrar el detalle de esa nueva vista, 
+
+
+ path: '/user/:user/post/:post',
+      name: 'UserPost',
+
+Creamos nuestroc omponente y le agregamos la estrcutura inicial:
+
+
+src/views/Order.vue
+
+<template></template>
+
+<script>
+export default {}
+</script>
+
+<style scoped></style>
+
+
+Colocamos un h1 y especificamos el contenido, creamos otra ruta similar a esta.Soloque en esta ruta no queremos recibir el id d ela orden, sino el nombre del producto, en lugar de order id, sera productName
+
+
+
+Creamos la vista Product.vue
+
+<template>
+  <div>
+    <h1>Order Page</h1>
+    <p>Aqui podrás ver el detalle de una orden.</p>
+  </div>
+</template>
+
+<script>
+import Order from '@/views/Order.vue'
+
+export default {}
+</script>
+
+<style scoped></style>
+
+
+Ahora en el archivo de rutas al ingresar aca, quedando el archiov de rutas:
+
+ {
+      path: '/compras/:orderId',
+      name: 'Order',
+      component: () => import('../views/Order.vue'),
+    },
+    {
+      path: '/compras/:productName',
+      name: 'Product',
+      component: () => import('../views/Product.vue'),
+    },
+
+Tenemos que decir que muestre la orden y el producto, analicemos el inconveniente, en ambos estamos teniendo la misma estructura en la url, entonces la vairable orderid y productname, vamos a ver que ocurre si ingresamos a una url con estas caracteristicas, 
+
+Si intentamos ingresar a una variable algo como:
+
+http://localhost:5173/compras/12345
+
+Sale 
+
+Order Page
+Aqui podrás ver el detalle de una orden.
+
+la ruta es la primea, la segunda es ignorada, las rutas se van leyendeo de arriva hacia abajo, comple con las caracteristicas del parametro, renderiza la vista rder, no se va a leer nunca, entonces para que ambas rutas funcionen, hay dos formas.
+Laa primera forma es tener url diferentes, podriamos hacer, 
+
+
+  {
+      path: '/compras/o/:orderId',
+      name: 'Order',
+      component: () => import('../views/Order.vue'),
+    },
+    {
+      path: '/compras/p/:productName',
+      name: 'Product',
+      component: () => import('../views/Product.vue'),
+    },
+
+O represneta a la orden y p al producto,   de esta forma teners url de estructura diferente, 
+
+Para poder ver las ordenes agregamos las 0 y si colocamos la p veremos la segunda ruta
+
+
+http://localhost:5173/compras/o/12345
+Order Page
+Aqui podrás ver el detalle de una orden.
+
+http://localhost:5173/compras/p/12345
+Product Name
+Aqui podrás ver el detalle de un producto.
+
+
+Pero imaguinemos que no es lo que buscamos, si la url para ambas, mostrar la orden y los procutos lleven los mismo, order o nombre dle procuto, entonces podriamos tomar uun segundo camino con expresiones regulares dentro de nuestras rutas:
+
+
+Si esperamos recibir el id de una orden que regularment es un numero, renderizara el contenido de order, y si es letras renderizara el nombre del producto, agrgamos las expresiones regulars dde la siguente manera:
+
+
+path: '/compras/:orderId(\\d+',
+
+Cion esto la inforamción que vamos a almacenar aca, necesariamebte saun numero, y si no corrpsonde a esta ruta pasara al detalle de la ruta, verificando:
+
+
+http://localhost:5173/compras/12345
+Order Page
+Aqui podrás ver el detalle de una orden.
+
+Aca tenemos solo numeros,vemos el detalle de una orden, pero si tenemos el nombre de un producto, mostrara aotra ruta, 
+http://localhost:5173/compras/polo
+Product Name
+Aqui podrás ver el detalle de un producto.
+
+
+
+Perfecto, de esta menra ogramos utulizar una misma estructura en las urls, pero mostrar diferentes vistas, dependera del tipo de parametro pasado por la url.
+

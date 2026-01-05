@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -34,10 +33,20 @@ const router = createRouter({
       component: () => import('../views/UserPost.vue'),
     },
     {
+      path: '/compras/:orderId(\\d+)',
+      name: 'Order',
+      component: () => import('../views/Order.vue'),
+    },
+    {
+      path: '/compras/:productName',
+      name: 'Product',
+      component: () => import('../views/Product.vue'),
+    },
+    {
       path: '/:pathMatch(.*)',
       name: 'NotFound',
       component: () => import('../views/NotFound.vue'),
-    }
+    },
   ],
 })
 
