@@ -1,0 +1,99 @@
+Rutas con parámetros opcionales en Vue 3
+
+En este capítulo, aprenderemos a crear rutas con parámetros opcionales en tu aplicación utilizando Vue Router. Creando una ruta que acepte un parámetro opcional y mostrará información específica basada en si el parámetro está presente o no.
+
+
+Habra ocaciones en las que queremos definir rutas con parametros, pero ese parametros sera opcional, por ejemplo 
+
+Definimos una ruta nueva con la siguiente estructura:
+
+
+
+
+Espera recibir un usuario, especificando que la informacion que llega en la ruta, es opcionaldefinimos que es opcional de la siguiente manera con un signo de interrogación con el nombre de users, con una nueva vista :
+
+
+   {
+      path: '/users/:userId?',
+      name: 'Users',
+      component: () => import('../views/Users.vue'),
+    },
+
+
+Cuando     
+
+
+La vista se crea, y que cuando indicquemos un usuario se muestre a iivsta ursers
+
+
+src/views/Users.vue
+
+Si escribirmos:
+
+
+http://localhost:5173/users/polo
+
+Users
+Aqui podrás ver la lista de usuarios.
+
+Aca esta dando este texto 
+
+Si ingresaramos:
+
+http://localhost:5173/users/45
+
+Sale el mismo mensaje ya que ambas rutas, traen el mismo contenido de la vista usaers, que el valor de usrId es un valor opcional con el ?
+
+Pero podriamos ir mas alla y colocar un div, 
+
+
+Con esto si no mando parametors se roproducsa lo primero pero si mando parametro pro la url, se mostrara el detale de abajo, para ello tenemos que hacer los iguiente
+
+Colocando una condicional 
+
+
+<div v-if="$route.params.userId">
+
+si yo mando un parametro en el userid, se va a mostrar la infoamción con el detalle de un usuario, 
+
+  <div v-if="$route.params.userId">
+    <h1>User</h1>
+    <p>Aqui podrás ver el detalle de un usuario.</p>
+  </div>
+  <div v-else>
+    <h1>User</h1>
+    <p>Aqui podrás ver la lista de usuarios.</p>
+  </div>
+
+significa que si no hemosmandado,  una ifnromacino lor la url se mostrara un cas, es decir si mandamos o no informaicón.
+
+entonces en la url
+
+
+http://localhost:5173/users/45
+User
+Aqui podrás ver el detalle de un usuario.
+
+
+y si mando:
+
+http://localhost:5173/users
+Users
+Aqui podrás ver la lista de usuarios.
+
+
+Claro esta que podriamos crear dos rutas con users y user con parametros, pero habra ucaciones que el valor sea opcional para esto seria un caso pertinente para esta situación.
+
+
+Recordando que hemos colocado:
+
+path: '/users/:userId?',
+
+Parametro, que esperamos recibir solo numeros, podriamos especirficar de un numero de la siguiente manera.
+
+path: '/users/:userId(\\d+)?',
+
+
+
+si escribimos por ejemplo 45 detalle d eun usuario pero si escribirmos texto mostrara una ruta no encontrada.
+
