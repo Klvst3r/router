@@ -3,3 +3,78 @@
 En estsección, aprenderemos a manejar rutas no encontradas en tu aplicación utilizando Vue Router. Crearemos una ruta especial que se mostrará cuando el usuario intente acceder a una ruta que no existe.
 
 
+Hasta el momento hemos generado unas rutas que nos va a permitir poder navegaro por nuestra aplicacipon, pero que ocurre si escrbinimos una rul no definida en el archivo de rutas, si ingresamos, no muestra nada y no genera un error.
+
+Lo normal es que cuando yo defino una ruta o ingreso a alguna parte del codigo, o una url no definida, debe salir algo como una error 404 ruta no encontrada, por ejemplo si nos dirigimos al sitiio web, con 403, queremos lograr los mismo que al no enocntrar una ruta nos de un mensje de error.
+
+Vamos a ello.
+
+Tenemos que trabajar con expresiones regulares. Cuando escribirmos una ruta vue capta lo que escribios y compara con lo que esta definido en el archivo de rutas, 
+
+src/router/index.js
+
+ahi tenemos definidas las rutas.
+
+routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: HomeView,
+    },
+    {
+      path: '/about',
+      name: 'about',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AboutView.vue'),
+    },
+    {
+      path: '/blog',
+      name: 'blog',
+      component: () => import('../views/Blog.vue'),
+    },
+    {
+      path: '/blog/:post',
+      name: 'Post',
+      component: () => import('../views/Post.vue'),
+    },
+    {
+      path: '/user/:user/post/:post',
+      name: 'UserPost',
+      component: () => import('../views/UserPost.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)',
+      name: 'NotFound',
+      component: () => import('../views/NotFound.vue'),
+    }
+  ],
+
+
+  Capta lo que escribimos y lo compara con las rutas definidas, en orden secuencial, en caso de no coincidir sigue cocn la que sigue, y asi.
+
+  Entonces lo que deberia hacer es que si no hay ninguna coincidencia es que traera un componente de ruta no encontrada.
+
+  Para ello definiremos una nueva ruta, con una expresion reular, para que cualquier cosa que ste scribto retorne un ocmponente, que se llame notFounf
+
+
+   {
+      path: '/:pathMatch(.*)',
+      name: 'NotFound',
+      component: () => import('../views/NotFound.vue'),
+    }
+
+
+Poniendo     
+
+path: '/:pathMatch(.*)',
+
+Que significa que cualquier cosa que haya mos escrito despues de /, queremos que retorne una vista aun no generada.
+
+Para elo vmos a crear la vista en
+
+src/views/NotFound.vue
+
+Regresando al archivod e rutas, indicaremos que traiga la ruta que se llama, NotFound, Vue va a leer nuesra url y la va a buscar en el archivo de rutas, si no hay conicdencia, chocara cn la ultima url definida, complira para cualquier url que coloquemos por que pede ir cualquier cosa delanete, esta url solo se llera si no hay concidencias en alguna de la url anterior o lruta anterior, entonces si no hay conincidencia retornara la vista mostrando el mensaje de ruta no encontrada que s o que tiene el componente o la vista del componente de la ruta no encontrada, dandonos una vista de ruta no enontrada pero si hay rutas definidas, mostrara la respectiva vista.
+
