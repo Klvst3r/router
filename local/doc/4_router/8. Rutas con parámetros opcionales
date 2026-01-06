@@ -97,3 +97,164 @@ path: '/users/:userId(\\d+)?',
 
 si escribimos por ejemplo 45 detalle d eun usuario pero si escribirmos texto mostrara una ruta no encontrada.
 
+Entonces queda el codigo del componente padre de la siguiente manera:
+
+Users.vue
+components: { Blog, }, components: { Users, },
+<template>
+  <div v-if="$route.params.userId">
+    <div id="nav">
+      <nav>
+        <RouterLink :to="`/users/${$route.params.userId}`">Inicio</RouterLink> |
+        <RouterLink :to="`/users/${$route.params.userId}/profile`"
+          >Perfil</RouterLink
+        >
+        |
+        <RouterLink :to="`/users/${$route.params.userId}/courses`"
+          >Cursos</RouterLink
+        >
+      </nav>
+    </div>
+
+    <hr />
+
+    <RouterView />
+  </div>
+
+  <div v-else>
+    <h1>Users</h1>
+    <p>Aquí podrás ver la lista completa de usuarios.</p>
+  </div>
+</template>
+
+<script>
+// Nota: No te hace falta importar Blog ni Users dentro de sí mismo,
+// eso causaría una recursión infinita o errores de carga.
+export default {
+  name: 'UsersView',
+}
+</script>
+<style scoped></style>
+
+
+el archivo de rutas:
+ {
+      path: '/users/:userId(\\d+)?',
+      name: 'Users',
+      component: () => import('../views/Users.vue'),
+      children: [
+        {
+          // users/:usersId
+          path: '',
+          component: () => import('../views/users/Index.vue'),
+        },
+        {
+          // users/:usersId/profile
+          path: 'profile',
+          component: () => import('../views/users/Profile.vue'),
+        },
+        {
+          // users/:usersId/courses
+          path: 'courses',
+          component: () => import('../views/users/Courses.vue'),
+        },
+      ],
+    },
+
+    el componente Index:
+    users/index
+    <template>
+  <div>
+    <h1>User {{ $route.params.userId }}</h1>
+    <p>Aquí podrás ver el detalle general de este usuario.</p>
+  </div>
+  <div>
+    <h1>Index</h1>
+    <p>Contenido por defecto.</p>
+  </div>
+</template>
+
+<script>
+import Order from '@/views/Order.vue'
+
+export default {}
+</script>
+
+<style scoped></style>
+
+
+el componente hijo Courses:
+<template>
+  <div>
+    <h1>Courses</h1>
+    <p>Aqui podrás ver los cursos que se matriculo un usuario.</p>
+  </div>
+</template>
+
+<script>
+import Order from '@/views/Order.vue'
+
+export default {}
+</script>
+
+<style scoped></style>
+
+
+y el componente hijo profile:
+<template>
+  <div>
+    <h1>Profile</h1>
+    <p>Aqui podrás ver el perfil de un usuario.</p>
+  </div>
+</template>
+
+<script>
+import Order from '@/views/Order.vue'
+
+export default {}
+</script>
+
+<style scoped></style>
+
+
+Aunque nuestro menu de navegacion peude quedar mejor concatenando:
+
+De esto:
+ <nav>
+        <RouterLink :to="`/users/${$route.params.userId}`">Inicio</RouterLink> |
+        <RouterLink :to="`/users/${$route.params.userId}/profile`"
+          >Perfil</RouterLink
+        >
+        |
+        <RouterLink :to="`/users/${$route.params.userId}/courses`"
+          >Cursos</RouterLink
+        >
+      </nav>
+
+
+a Esto:
+
+  <nav>
+        <RouterLink :to="'/users/' + $route.params.userId"> Inicio </RouterLink>
+        |
+
+        <RouterLink :to="'/users/' + $route.params.userId + '/profile'">
+          Perfil
+        </RouterLink>
+        |
+
+        <RouterLink :to="'/users/' + $route.params.userId + '/courses'">
+          Cursos
+        </RouterLink>
+      </nav>
+
+
+Para o estar usando una constante sino una variable de acuerdo a lvalor del id del usuario tenemos que hacer suo de
+
+$route.params.userId
+
+Los parametros, recuperamos lo que tenemos en la variable userId
+
+
+Todo esto es rutas anidadas.
+

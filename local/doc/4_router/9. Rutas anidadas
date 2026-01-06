@@ -34,8 +34,152 @@ La estructuracon el div nav y lo pegamos en Users.vue
 
   cambiandoo a:
 
-  Ahora tenemos el link de cursos y perfil, la forma mas sencilla es definir una ruta de perfil con el detalle del perfil y de cursos con el detalle de cursos de un determinado usuario, perosi queremos mantener la estructura de este curso, no importa si ingreso a perdfil o cursos donde podras ver los detalles ingresaria sobre el perfil de cursos, no se necesitaria renderizar toda la pagina sino solo renderizar la parte  de abajo pero la parte de abajo es la que se renderizaria, para lograr eso, necesitamos trabajar con tutas aniadeas
+  Ahora tenemos el link de cursos y perfil, la forma mas sencilla es definir una ruta de perfil con el detalle del perfil y de cursos con el detalle de cursos de un determinado usuario, perosi queremos mantener la estructura de este curso, no importa si ingreso a perdfil o cursos donde podras ver los detalles ingresaria sobre el perfil de cursos, no se necesitaria renderizar toda la pagina sino solo renderizar la parte  de abajo pero la parte de abajo es la que se renderizaria, para lograr eso, necesitamos trabajar con tutas anidadas.
 
-  Para ello en el archivo de rutas, en la ruta principal, de usuario y ahi especificmocon rutas anidades, para ello definimos una propiedad props y asignamos un array y le asignamos rutas hijas, estas rujas estan asociadas a una ruta principal de esta manera:
+  Para ello en el archivo de rutas, en la ruta principal, de usuario y ahi especificmocon rutas anidades, para ello definimos una propiedad props y asignamos un array y le asignamos rutas hijas, estas rujas tienen la misma estructura que las rutas padre, estan asociadas a una ruta principal de esta manera:
 
+    {
+      path: '/users/:userId(\\d+)?',
+      name: 'Users',
+      component: () => import('../views/Users.vue'),
+      children:[
+      {
+      path:'profile',
+      },
+      ]
+    },
+
+
+Para definir una ruta:
+
+profile: Pra mostrar la información del usuario, y nosinteresa la otra ruta para los cusos
+
+
+Tendremos que mostrar una vista cada ves que ingresamos a la ruta principal, con las rutas hijas tenemos que hacer los mismo, para ello nos vamos a la ruta views.
+
+Creamos una nueva carpeta llamada users, con dos vistas profile y otra que se llame courses
+
+views:
+	users/
+		- Courses.vue
+		- Profile.vue
+
+Damos a cada uno de ellos la estrcutura del componente.
+
+Una vez que ya se crearon estas os vistas vamos a decir que cuando ingresemos a estos dos rutas hijas vamos a hacer lo siguiente: 
+
+Vamos a pedir que apunte al componente que se encuentra adentro de la carpeta views, dentro de una carpeta llamada users, y en el caso del primero que se llama profile, quedando de la siguiete manera:
+
+Aputando a la vista de Profile y de Courses, 
+
+{
+      path: '/users/:userId(\\d+)?',
+      name: 'Users',
+      component: () => import('../views/Users.vue'),
+      children: [
+        {
+          path: 'profile',
+          component: () => import('../views/users/Profile.vue'),
+        },
+        {
+          path: 'ocourses',
+          component: () => import('../views/users/Courses.vue'),
+        },
+      ],
+    },
+
+
+
+
+Esto de las rutas hijas, cuando definimos una ruta hija es comun si creamos una ruta similar a esta, va a tomar la url principal que en este caso es users, seguido del id del usuario y va a generar un aruta con esta estructura, al definir una ruta hija llamada profile, vamos a tomar una ruta d ela ruta principal y le va a gregar el profile, lo mismo va a ocurrir con la otra ruta, va a tomar la ruta de la ruta principal pero al final le va a agregar Courses. y es como si hubieramos generadodos rutas mas.
+
+quedando:
+
+
+ children: [
+        {
+          // users/:usersId/profile
+          path: 'profile',
+          component: () => import('../views/users/Profile.vue'),
+        },
+        {
+          // users/:usersId/courses
+          path: 'ocourses',
+          component: () => import('../views/users/Courses.vue'),
+        },
+      ],
+
+
+Ya hemos generdo nuestras dos rutas hijas y lo que queremos hacer ahora en esta vista profile y vamos a cerrar la vista Courses, nos centraremos en el componente uses.vue
+
+Pidiendo cada uno de estas rutas que tenemos aca apunte a cada una de las rutas hijas de la siguiente maenra:
+
+Copiamos en :
+
+Users.vue
+
+users/:usersId/profile
+
+Nos dirigimos a Users y pegarlo en el link 
+
+
+	<RouterLink to="/users/30/profile">Perfil</RouterLink>
+
+Hacemos lo mismo con el otro link
+
+	<RouterLink to="/users/30/courses">Cursos</RouterLink>
+
+Estos dos links que hemos generado aca estan apuntando cada una a la ruta profile y courses.
+
+
+Ahora vamos a ver que ocurre.
+
+Si hacemos click sobre perfil veremos:
+
+que seha modificado, la url a: 
+	http://localhost:5173/users/30/profile
+
+Se ve el link activo y lo mimo para Cursos se modifica la url y en este caso se vuelve a marcar el link como activo, y lo que vemos la vista users se sigue manteniendo.
+
+
+Aunque nuestro menu de navegacion peude quedar mejor concatenando:
+
+De esto:
+ <nav>
+        <RouterLink :to="`/users/${$route.params.userId}`">Inicio</RouterLink> |
+        <RouterLink :to="`/users/${$route.params.userId}/profile`"
+          >Perfil</RouterLink
+        >
+        |
+        <RouterLink :to="`/users/${$route.params.userId}/courses`"
+          >Cursos</RouterLink
+        >
+      </nav>
+
+
+a Esto:
+
+  <nav>
+        <RouterLink :to="'/users/' + $route.params.userId"> Inicio </RouterLink>
+        |
+
+        <RouterLink :to="'/users/' + $route.params.userId + '/profile'">
+          Perfil
+        </RouterLink>
+        |
+
+        <RouterLink :to="'/users/' + $route.params.userId + '/courses'">
+          Cursos
+        </RouterLink>
+      </nav>
+
+
+Para o estar usando una constante sino una variable de acuerdo a lvalor del id del usuario tenemos que hacer suo de
+
+$route.params.userId
+
+Los parametros, recuperamos lo que tenemos en la variable userId
+
+
+Todo esto es rutas anidadas.
 

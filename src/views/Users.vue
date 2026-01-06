@@ -1,27 +1,38 @@
 components: { Blog, }, components: { Users, },
 <template>
   <div v-if="$route.params.userId">
-    <h1>User</h1>
-    <p>Aqui podrás ver el detalle de un usuario.</p>
+    <div id="nav">
+      <nav>
+        <RouterLink :to="'/users/' + $route.params.userId"> Inicio </RouterLink>
+        |
+
+        <RouterLink :to="'/users/' + $route.params.userId + '/profile'">
+          Perfil
+        </RouterLink>
+        |
+
+        <RouterLink :to="'/users/' + $route.params.userId + '/courses'">
+          Cursos
+        </RouterLink>
+      </nav>
+    </div>
+
+    <hr />
+
+    <RouterView />
   </div>
+
   <div v-else>
     <h1>Users</h1>
-    <p>Aqui podrás ver la lista de usuarios.</p>
-  </div>
-  <div id="nav">
-    <nav>
-      <RouterLink to="/">Perfil</RouterLink>
-      <RouterLink to="/about">Cursos</RouterLink>
-    </nav>
+    <p>Aquí podrás ver la lista completa de usuarios.</p>
   </div>
 </template>
 
 <script>
-import Order from '@/views/Order.vue'
-import Users from '@/views/Users.vue'
-import Blog from '@/views/Blog.vue'
-
-export default {}
+// Nota: No te hace falta importar Blog ni Users dentro de sí mismo,
+// eso causaría una recursión infinita o errores de carga.
+export default {
+  name: 'UsersView',
+}
 </script>
-
 <style scoped></style>

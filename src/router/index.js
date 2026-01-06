@@ -46,6 +46,23 @@ const router = createRouter({
       path: '/users/:userId(\\d+)?',
       name: 'Users',
       component: () => import('../views/Users.vue'),
+      children: [
+        {
+          // users/:usersId
+          path: '',
+          component: () => import('../views/users/Index.vue'),
+        },
+        {
+          // users/:usersId/profile
+          path: 'profile',
+          component: () => import('../views/users/Profile.vue'),
+        },
+        {
+          // users/:usersId/courses
+          path: 'courses',
+          component: () => import('../views/users/Courses.vue'),
+        },
+      ],
     },
     {
       path: '/:pathMatch(.*)',
