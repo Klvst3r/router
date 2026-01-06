@@ -1,4 +1,7 @@
-components: { Blog, }, components: { Users, },
+
+	components: {
+		Users,
+	},components: { Blog, }, components: { Users, },
 <template>
   <div v-if="$route.params.userId">
     <div id="nav">
@@ -29,6 +32,8 @@ components: { Blog, }, components: { Users, },
 </template>
 
 <script>
+import Users from '@/views/Users.vue'
+
 // Nota: No te hace falta importar Blog ni Users dentro de sí mismo,
 // eso causaría una recursión infinita o errores de carga.
 export default {
